@@ -1,6 +1,6 @@
 /*
   PennApps Fall 2015
-  
+  Braille Output onto Arduino Micro
 */
 
 // pins of 6 dot array
@@ -12,46 +12,61 @@ const int FIVE = 9;
 const int SIX = 10;
 
 // character definitions
-const boolean[] CHR_A = { true, false, false, false, false, false };
-const boolean[] CHR_B = { true, false, true, false, false, false };
-const boolean[] CHR_C = { true, true, false, false, false, false };
-const boolean[] CHR_D = { true, true, false, true, false, false };
-const boolean[] CHR_E = { true, false, false, true, false, false };
-const boolean[] CHR_F = { true, true, true, false, false, false };
-const boolean[] CHR_G = { true, true, true, true, false, false };
-const boolean[] CHR_H = { true, false, true, true, false, false };
-const boolean[] CHR_I = { false, true, true, false, false, false };
-const boolean[] CHR_J = { false, true, true, true, false, false };
-const boolean[] CHR_K = { true, false, false, false, true, false };
-const boolean[] CHR_L = { true, false, true, false, true, false };
-const boolean[] CHR_M = { true, true, false, false, true, false };
-const boolean[] CHR_N = { true, true, false, true, true, false };
-const boolean[] CHR_O = { true, false, false, true, true, false };
-const boolean[] CHR_P = { true, true, true, false, true, false };
-const boolean[] CHR_Q = { true, true, true, true, true, false };
-const boolean[] CHR_R = { true, false, true, true, true, false };
-const boolean[] CHR_S = { false, true, true, false, true, false };
-const boolean[] CHR_T = { false, true, true, true, true, false };
-const boolean[] CHR_U = { true, false, false, false, true, true };
-const boolean[] CHR_V = { true, false, true, false, true, true };
-const boolean[] CHR_W = { false, true, true, true, false, true };
-const boolean[] CHR_X = { true, true, false, false, true, true };
-const boolean[] CHR_Y = { true, true, false, true, true, true };
-const boolean[] CHR_Z = { true, false, false, true, true, true };
-//????
-const boolean[] CHR_0 = { true, false, false, false, false, false };
-const boolean[] CHR_1 = { true, false, false, false, false, false };
-const boolean[] CHR_2 = { true, false, true, false, false, false };
-const boolean[] CHR_3 = { true, false, false, false, false, false };
-const boolean[] CHR_4 = { true, false, true, false, false, false };
-const boolean[] CHR_5 = { true, false, false, false, false, false };
-const boolean[] CHR_6 = { true, false, true, false, false, false };
-const boolean[] CHR_7 = { true, false, false, false, false, false };
-const boolean[] CHR_8 = { true, false, true, false, false, false };
-const boolean[] CHR_9 = { true, false, false, false, false, false };
+const boolean CHR_A[] = { true, false, false, false, false, false };
+const boolean CHR_B[] = { true, false, true, false, false, false };
+const boolean CHR_C[] = { true, true, false, false, false, false };
+const boolean CHR_D[] = { true, true, false, true, false, false };
+const boolean CHR_E[] = { true, false, false, true, false, false };
+const boolean CHR_F[] = { true, true, true, false, false, false };
+const boolean CHR_G[] = { true, true, true, true, false, false };
+const boolean CHR_H[] = { true, false, true, true, false, false };
+const boolean CHR_I[] = { false, true, true, false, false, false };
+const boolean CHR_J[] = { false, true, true, true, false, false };
+const boolean CHR_K[] = { true, false, false, false, true, false };
+const boolean CHR_L[] = { true, false, true, false, true, false };
+const boolean CHR_M[] = { true, true, false, false, true, false };
+const boolean CHR_N[] = { true, true, false, true, true, false };
+const boolean CHR_O[] = { true, false, false, true, true, false };
+const boolean CHR_P[] = { true, true, true, false, true, false };
+const boolean CHR_Q[] = { true, true, true, true, true, false };
+const boolean CHR_R[] = { true, false, true, true, true, false };
+const boolean CHR_S[] = { false, true, true, false, true, false };
+const boolean CHR_T[] = { false, true, true, true, true, false };
+const boolean CHR_U[] = { true, false, false, false, true, true };
+const boolean CHR_V[] = { true, false, true, false, true, true };
+const boolean CHR_W[] = { false, true, true, true, false, true };
+const boolean CHR_X[] = { true, true, false, false, true, true };
+const boolean CHR_Y[] = { true, true, false, true, true, true };
+const boolean CHR_Z[] = { true, false, false, true, true, true };
+const boolean CHR_0[] = { false, true, true, true, false, false };
+const boolean CHR_1[] = { true, false, false, false, false, false };
+const boolean CHR_2[] = { true, false, true, false, false, false };
+const boolean CHR_3[] = { true, true, false, false, false, false };
+const boolean CHR_4[] = { true, true, false, true, false, false };
+const boolean CHR_5[] = { true, false, false, true, false, false };
+const boolean CHR_6[] = { true, true, true, false, false, false };
+const boolean CHR_7[] = { true, true, true, true, false, false };
+const boolean CHR_8[] = { true, false, true, true, false, false };
+const boolean CHR_9[] = { false, true, true, false, false, false };
+const boolean CHR_PERIOD[] = { false, false, true, true, false, true };
+const boolean CHR_COMMA[] = { false, false, true, false, false, false };
+const boolean CHR_SEMICLN[] = { false, false, true, false, true, false };
+const boolean CHR_COLON[] = { false, false, true, true, false, false };
+const boolean CHR_SLASH[] = { false, true, false, false, true, false };
+const boolean CHR_QUERY[] = { false, false, true, false, true, true };
+const boolean CHR_BANG[] = { false, false, true, true, true, false };
+const boolean CHR_AT[] = { false, true, false, true, true, false };
+const boolean CHR_POUND[] = { false, true, false, true, true, true };
+const boolean CHR_PLUS[] = { false, false, true, true, true, false };
+const boolean CHR_MINUS[] = { false, false, true, true, false, false };
+const boolean CHR_ASTER[] = { false, false, false, true, true, false };
+const boolean CHR_QUOTE[] = { false, false, true, false, true, true };
+const boolean CHR_APOST[] = { false, false, false, false, true, false };
+const boolean CHR_LCARET[] = { true, false, true, false, false, true };
+const boolean CHR_RCARET[] = { false, true, false, true, true, false };
+const boolean CHR_PAREN[] = { false, false, true, true, true, true };
 
 void setup() {
-  // put your setup code here, to run once:
   pinMode(ONE, OUTPUT);
   pinMode(TWO, OUTPUT);
   pinMode(THREE, OUTPUT);
@@ -71,13 +86,13 @@ void turnOffAll() {
 }
 
 // turn on specific character pattern on 6 dot array
-void turnOnChr(boolean *chr) {
+void turnOnChr(const boolean *chr) {
   int currentPin = ONE;
   for (int i = 0; i < 6; i++) {
     if (chr[i]) digitalWrite(currentPin, HIGH);
     currentPin++;
   }
-  delay(1000);
+  delay(100);
   turnOffAll();
 }
 
@@ -194,6 +209,60 @@ void turnOnStr(String str) {
       case '9':
         turnOnChr(CHR_9);
         break;
+      case '.':
+        turnOnChr(CHR_PERIOD);
+        break;
+      case ',':
+        turnOnChr(CHR_COMMA);
+        break;
+      case ';':
+        turnOnChr(CHR_SEMICLN);
+        break;
+      case ':':
+        turnOnChr(CHR_COLON);
+        break;
+      case '/':
+        turnOnChr(CHR_SLASH);
+        break;
+      case '?':
+        turnOnChr(CHR_QUERY);
+        break;
+      case '!':
+        turnOnChr(CHR_BANG);
+        break;
+      case '@':
+        turnOnChr(CHR_AT);
+        break;
+      case '#':
+        turnOnChr(CHR_POUND);
+        break;
+      case '+':
+        turnOnChr(CHR_PLUS);
+        break;
+      case '-':
+        turnOnChr(CHR_MINUS);
+        break;
+      case '*':
+        turnOnChr(CHR_ASTER);
+        break;
+      case '\"':
+        turnOnChr(CHR_QUOTE);
+        break;
+      case '\'':
+        turnOnChr(CHR_APOST);
+        break;
+      case '<':
+        turnOnChr(CHR_LCARET);
+        break;
+      case '>':
+        turnOnChr(CHR_RCARET);
+        break;
+      case '(':
+        turnOnChr(CHR_PAREN);
+        break;
+      case ')':
+        turnOnChr(CHR_PAREN);
+        break;
       default:
         break;
     }
@@ -202,6 +271,6 @@ void turnOnStr(String str) {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  String str = "";
+  String str = "abcdefghijklmnopqrstuvwxyz";
   turnOnStr(str);
 }
