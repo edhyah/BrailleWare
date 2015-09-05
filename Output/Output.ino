@@ -83,6 +83,7 @@ void turnOffAll() {
   digitalWrite(FOUR, LOW);
   digitalWrite(FIVE, LOW);
   digitalWrite(SIX, LOW);
+  delay(20);
 }
 
 // turn on specific character pattern on 6 dot array
@@ -92,7 +93,7 @@ void turnOnChr(const boolean *chr) {
     if (chr[i]) digitalWrite(currentPin, HIGH);
     currentPin++;
   }
-  delay(100);
+  delay(1000);
   turnOffAll();
 }
 
@@ -270,7 +271,11 @@ void turnOnStr(String str) {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  String str = "abcdefghijklmnopqrstuvwxyz";
-  turnOnStr(str);
+  // read data from Bluetooth
+  String text = "";
+  while (Serial.available()) {
+    text += char(Serial.read());
+  }
+  // display text
+  turnOnStr(text);
 }
