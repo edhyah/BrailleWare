@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('opennlp-tools-1.5.0.jar'))
