@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('maxent-3.0.0.jar'))

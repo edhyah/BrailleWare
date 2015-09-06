@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('jwnl-1.3.3.jar'))

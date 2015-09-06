@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">BrailleWareApp</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_connect">Connect</string>
+
+    <string name="title_activity_device_list">Available Devices</string>
+
+    <!-- MainActivity -->
+    <string name="not_connected">You are not connected to a device</string>
+
+    <!-- Device List Activity -->
+    <string name="scanning">Scanning for devices...</string>
+    <string name="select_device">Select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="button_scan">Scan for devices</string>
+</resources>
