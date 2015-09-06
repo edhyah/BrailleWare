@@ -3,10 +3,11 @@ package com.edwardahn.braillewareapp;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
+//import org.apache.http.params.HttpParams;
+//import org.apache.http.protocol.HTTP;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -43,8 +44,9 @@ public class MainService extends Service {
                     BufferedReader in = new BufferedReader(new InputStreamReader(
                             urlConnection.getInputStream()));
                     String inputLine;
-                    while ((inputLine = in.readLine()) != null)
-                        System.out.println(inputLine);
+                    while ((inputLine = in.readLine()) != null) {
+                        Log.w("MESSAGE_TYPE", inputLine);
+                    }
                 } catch (Exception e) {
                 } finally {
                     urlConnection.disconnect();
