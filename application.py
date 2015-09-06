@@ -1,4 +1,6 @@
 from flask import Flask
+from flask import request
+from flask import Response
 from site_reader import *
 import json
 
@@ -9,5 +11,5 @@ def getText():
     url = request.args.get('url')
     return getSiteText(url)
 
-if name == "__main__":
-    app.run()
+if __name__ == "__main__":
+    app.run(host="45.79.149.238", debug=True)
