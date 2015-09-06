@@ -11,8 +11,14 @@ def getSiteText(url):
     r = requests.get(url=site, params=params)
     results = dict()
     r = r.json()
-    results['title'] = r['objects'][0]['title']
-    results['text'] = r['objects'][0]['text']
+    try:
+        results['title'] = r['objects'][0]['title']
+    except:
+        results['title'] = r.get('title', "Untitled")
+    try:
+        results['text'] = r['objects'][0]['text']
+    except:
+        results['text'] = r.get('text', "No text found.")
     if results['title'] == "": results['title'] = "Untitled"
     if results['text'] == "": results['text'] = "No text found."
     results['length'] = len(results['text'])
