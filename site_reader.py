@@ -1,36 +1,17 @@
-#############################
-# FIFTH SENSE (PennApps '15)#
-#@author: rajat mehndiratta #
-#@version: 0.1              #
-#@license: GPL              #
-#############################
-
 import requests
-from HTMLParser import HTMLParser
+import json
 
-class MLStripper(HTMLParser):
+APIToken = "2a6991cb5594e889e9bbb0330072624f"
 
-    def __init__(self):
-        self.reset()
-        self.fed = []
-
-    def handle_data(self, d):
-        self.fed.append(d)
-
-    def get_data(self):
-        return ''.join(self.fed)
-
-class SiteReader(object):
-
-    def __init__(self, url):
-        self.url = url
-
-    def getPageData(self):
-        r = requests.get(self.url)
-        return r.text
-
-    def parseSite(self):
-        siteData = self.getPageData()
-        stripper = MLStripper()
-        stripper.feed(siteData)
-        return stripper.get_data()
+def getSiteText(url):
+    site = "http://api.diffbot.com/v3/article"
+    params = dict()
+    params['token'] = APIToken
+    params['url'] = url
+    r = requests.get(url=site, params=params)
+    results = dict()
+    r = r.json()
+    results['title'] = r.get('title', "Untitled")
+    results['text'] = r.get('text', "No text found.")
+    results['length'] = len(results['text'])
+    return json.dumps(results)
