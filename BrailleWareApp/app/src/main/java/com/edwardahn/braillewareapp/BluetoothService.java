@@ -141,6 +141,7 @@ public class BluetoothService {
         }
         // Perform the write unsynchronized
         r.write(out);
+        Log.i("Bluetooth Service", "message officially sent");
     }
 
     private void connectionFailed() {

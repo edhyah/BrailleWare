@@ -15,9 +15,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import opennlp.maxent.Main;
+
 
 public class MainActivity extends Activity {
 
+    private class ToSendReceiver extends BroadcastReceiver {
+
+        private Activity mainActivity;
+        public ToSendReceiver(MainActivity mainActivity) {
+            super();
+            this.mainActivity = mainActivity;
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Constants.SEND_STRING)) {
+                sendMessage("hi");
+
+            }
+        }
+    }
+
+    private ToSendReceiver sender;
     private static final String TAG = "MainActivity";
 
     // Local Bluetooth adapter
@@ -64,6 +84,12 @@ public class MainActivity extends Activity {
 
         // Initialize the buffer for outgoing messages
         mOutStringBuffer = new StringBuffer("");
+
+        sender = new ToSendReceiver(this);
+        IntentFilter intentFilter = new IntentFilter(Constants.SEND_STRING);
+        this.registerReceiver(sender, intentFilter);
+        // here we're going to need to add the server reader / writer background service
+        startService(new Intent(this, MainService.class));
     }
 
     private void setupConnection() {
@@ -106,6 +132,7 @@ public class MainActivity extends Activity {
 
             // Reset out string buffer to zero and clear the edit text field
             mOutStringBuffer.setLength(0);
+            Log.i(TAG, "Message sent");
         }
     }
 
@@ -177,3 +204,4 @@ public class MainActivity extends Activity {
         }
     };
 }
+

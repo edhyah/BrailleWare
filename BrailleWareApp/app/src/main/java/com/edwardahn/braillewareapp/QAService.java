@@ -166,6 +166,8 @@ public class QAService {
                 }
                 text = processText(text);
             }
+
+            Log.i("QAService", "found answer");
         } catch (Exception ex) {
             text = "Parsing error: " + ex.getMessage();
             Log.e("",text);

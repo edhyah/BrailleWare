@@ -73,6 +73,7 @@ void setup() {
   pinMode(FOUR, OUTPUT);
   pinMode(FIVE, OUTPUT);
   pinMode(SIX, OUTPUT);
+  Serial.begin(9600);
 }
 
 // turn off all vibrations
@@ -276,6 +277,7 @@ void loop() {
   while (Serial.available()) {
     text += char(Serial.read());
   }
+  Serial.println(text);
   // display text
   turnOnStr(text);
 }
