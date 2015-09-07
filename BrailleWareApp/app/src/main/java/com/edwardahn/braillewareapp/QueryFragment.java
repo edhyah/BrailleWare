@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -39,6 +40,9 @@ public class QueryFragment extends Fragment implements View.OnClickListener {
     private ImageButton mSendButton;
     private TextView mQueryView;
 
+    private TextView mBrailleOut;
+    private TextView mTotalText;
+
     // Array adapter for conversation thread
     public ArrayAdapter<String> mConversationArrayAdapter;
 
@@ -57,6 +61,12 @@ public class QueryFragment extends Fragment implements View.OnClickListener {
         View view = (LinearLayout) inflater.inflate(R.layout.fragment_query, container, false);
         mButton = (ImageButton) view.findViewById(R.id.button_voice);
         mButton.setOnClickListener(this);
+        final Button button = (Button) view.findViewById(R.id.connect);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).setupConnection();
+            }
+        });
         return view;
     }
 
@@ -77,16 +87,33 @@ public class QueryFragment extends Fragment implements View.OnClickListener {
         if (requestCode == REQUEST_OK) {
             if (data == null) return;
             ArrayList<String> thingsYouSaid = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            ((TextView) getView().findViewById(R.id.edit_text_out)).setText(thingsYouSaid.get(0));
+            new QAThread(thingsYouSaid.get(0)).start();
+            //((TextView) getView().findViewById(R.id.edit_text_out)).setText(thingsYouSaid.get(0));
         }
     }
 
     @Override
     public void onViewCreated(View view, /*@Nullable*/ Bundle savedInstanceState) {
+
         //mConversationView = (ListView) view.findViewById(R.id.in);
+        /*
         mOutEditText = (EditText) view.findViewById(R.id.edit_text_out);
         mSendButton = (ImageButton) view.findViewById(R.id.button_send);
-        mQueryView = (TextView) view.findViewById(R.id.query_in);
+        mQueryView = (TextView) view.findViewById(R.id.query_in);*/
+
+        mBrailleOut = (TextView) view.findViewById(R.id.braille_out);
+        mTotalText = (TextView) view.findViewById(R.id.total_text);
+        mBrailleOut.setText("Hello.");
+        mTotalText.setText("");
+    }
+
+    public void displayLetter(String msg, String concat) {
+        Log.i("","display letter called");
+        mBrailleOut.setText(msg);
+        // use queue
+        mTotalText.setText(mTotalText.getText().toString() + msg);
+        // message shouljd be total text
+        if (msg.equals('?')) new QAThread(concat).start();
     }
 
     @Override
@@ -101,6 +128,7 @@ public class QueryFragment extends Fragment implements View.OnClickListener {
         // Initialize the compose field with a listener for the return key
         //mOutEditText.setOnEditorActionListener(mWriteListener);
 
+        /*
         // Initialize the send button with a listener that for click events
         mSendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -123,7 +151,7 @@ public class QueryFragment extends Fragment implements View.OnClickListener {
                     new QAThread(message).start();
                 }
             }
-        });
+        });*/
     }
 
     class QAThread extends Thread {

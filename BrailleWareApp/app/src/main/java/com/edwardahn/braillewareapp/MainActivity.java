@@ -15,6 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
+
 import opennlp.maxent.Main;
 
 
@@ -39,6 +44,8 @@ public class MainActivity extends Activity {
 
     private ToSendReceiver sender;
     private static final String TAG = "MainActivity";
+
+    private LinkedBlockingDeque<String> received;
 
     // Local Bluetooth adapter
     private BluetoothAdapter mBluetoothAdapter = null;
@@ -90,9 +97,11 @@ public class MainActivity extends Activity {
         this.registerReceiver(sender, intentFilter);
         // here we're going to need to add the server reader / writer background service
         startService(new Intent(this, MainService.class));
+
+        received = new LinkedBlockingDeque<String>();
     }
 
-    private void setupConnection() {
+    public void setupConnection() {
         Intent serverIntent = new Intent(this, DeviceListActivity.class);
         startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
     }
@@ -188,6 +197,17 @@ public class MainActivity extends Activity {
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     Log.i("MainActivity:", readMessage);
+                    QueryFragment frag = (QueryFragment) getFragmentManager().findFragmentByTag("query");
+                    String concat = "";
+                    for (int i =0; i < received.size(); i++) {
+                        concat += received.pop();
+                    }
+                    frag.displayLetter(readMessage, concat);
+                    received.offer(readMessage);
+                    if (received.size() > 100) {
+                        received.removeFirst();
+                    }
+
                     // Do something with readMessage here
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
