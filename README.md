@@ -11,6 +11,6 @@ This device was created at PennApps XII during September 4 - 6, 2015.
 
 ## Awards
 
-PennApps Grand Prize
-PennApps Best Hardware Hack
-Best AlphaLab Gear Hardware Hack
+- PennApps Grand Prize
+- PennApps Best Hardware Hack
+- Best AlphaLab Gear Hardware Hack
