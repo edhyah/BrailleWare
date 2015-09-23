@@ -439,3 +439,21 @@ void loop() {
   // display text
   turnOnStr(text);
 }
+
+int getDistance(int trigPin, int echoPin, int delayTime)
+{
+  long duration, distance;
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(delayTime);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(delayTime);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = microsecondsToInches(duration);
+  return distance;
+}
+
+long microsecondsToInches(long duration)
+{
+  return duration / 74 / 2;
+}
