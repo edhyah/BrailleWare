@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="opennlp-tools-1.5.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/BrailleWareApp/app/opennlp-tools-1.5.0/opennlp-tools-1.5.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,3 +1,4 @@
+#include <QueueList.h>
 #include <math.h>
 #include <stdint.h>
 
@@ -13,12 +14,12 @@
 #define BUTTON_FOUR A4
 #define BUTTON_FIVE A5
 
-#define VIBE_ZERO 3
-#define VIBE_ONE 5
-#define VIBE_TWO 6
-#define VIBE_THREE 9
-#define VIBE_FOUR 10
-#define VIBE_FIVE 11
+#define VIBE_ZERO 5 //3
+#define VIBE_ONE 6 //5
+#define VIBE_TWO 7
+#define VIBE_THREE 8
+#define VIBE_FOUR 9 //10
+#define VIBE_FIVE 10 //11
 
 /* // pins of 6 dot array */
 /* const int ONE = 5; */
@@ -119,6 +120,7 @@ void turnOffAll() {
 
 // turn on specific character pattern on 6 dot array
 void turnOnChr(const boolean *chr) {
+//  Serial.println("Got here?");
   float fos = .5;
   if (chr[0]) analogWrite(VIBE_ZERO, (int)(255 * fos));
   if (chr[1]) analogWrite(VIBE_ONE, (int)(255 * fos));
@@ -337,7 +339,9 @@ void bluetooth_send(char to_send) {
 void loop() {
   /* I/O loop, needs to read first, then display if anything is left */
   // low will be the button is pressed
-  
+//  Serial.println(digitalRead(BUTTON_ZERO), digitalRead(BUTTON_ONE), digitalRead(BUTTON_TWO), digitalRead(BUTTON_THREE),
+//                 digitalRead(BUTTON_FOUR), digitalRead(BUTTON_FIVE));
+//  Serial.println(digitalRead(BUTTON_THREE));
   boolean is_clear = true;
   int read = digitalRead(BUTTON_ZERO);
   if ((bool)read) {is_clear = false;} else {
@@ -430,6 +434,31 @@ void loop() {
     }
   }
 
+  const int max_presses = 10;
+  if (button_zero_presses.count() > max_presses) {
+    button_zero_presses.pop();
+  }
+  
+  if (button_one_presses.count() > max_presses) {
+    button_one_presses.pop();
+  }
+  
+  if (button_two_presses.count() > max_presses) {
+    button_two_presses.pop();
+  }
+
+  if (button_three_presses.count() > max_presses) {
+    button_three_presses.pop();
+  }
+
+  if (button_four_presses.count() > max_presses) {
+    button_four_presses.pop();
+  }
+
+  if (button_five_presses.count() > max_presses) {
+    button_five_presses.pop();
+  }  
+    
   // read data from Bluetooth
   String text = "";
   while (Serial.available()) {
